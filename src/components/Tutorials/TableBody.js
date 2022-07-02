@@ -1,44 +1,69 @@
 import React from 'react';
-import { Table } from 'reactstrap';
-import { Button } from 'reactstrap';
+import styled from "styled-components";
+import { Row, Col, Button, Card, CardImg, CardImgOverlay, CardTitle, CardText } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons'
 
 
 function TableBody(props) {
-    const { tutorials, deleteTutorial, updateTutorial, currentTutorial, getTutorial, toggle } = props
+    const { tutorials, deleteTutorial, getTutorial, toggle } = props
 
     return (
         <>
-            <Table striped>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Address</th>
-                        <th>Created At</th>
-                    </tr>
-                </thead>
-                <tbody>
+            <Row>
+                
                 {tutorials &&
                     tutorials.map((tutorial, index) => (
-                    <tr key={index}>
-                        <td>{tutorial.title}</td>
-                        <td>{tutorial.description}</td>
-                        <td>{tutorial.address}</td>
-                        <td>{tutorial.createdAt}</td>
-                        <td>
-                            <div className="" onClick={toggle}>
-                                <Button color="primary" onClick={() =>getTutorial(tutorial.id)}>Edit</Button> 
-                            </div>
-                        </td>
-                        
-                        <td><Button color="danger" onClick={deleteTutorial}>Delete</Button></td>
-                    </tr>
-                ))}
-                </tbody>
-            </Table>
-        </>
+                        <Col sm='3'>
+                            <StyledCard>
+                                <Card inverse>
+                                    <CardImg
+                                    // src={require('../../img/Gokarna/20200615_171932.jpg')}
+                                    src={`http://localhost:8080/${tutorial.image}`}
+                                    width="100%"
+                                    />
+                                    <CardImgOverlay>
+                                    <CardTitle tag="p">
+                                    {tutorial.title}
+                                    </CardTitle>
+                                    <CardText>{tutorial.description}</CardText>
+                                    <CardText>{tutorial.phone}</CardText>
+                                    <CardText>
+                                    {tutorial.address}
+                                    </CardText>
+                                    <div className="buttons">
+                                        <div className="" onClick={toggle}>
+                                        <FontAwesomeIcon onClick={() =>getTutorial(tutorial.id)} icon={faPen} />
+                                        </div>
+                                        <FontAwesomeIcon onClick={() =>deleteTutorial(tutorial.id)} icon={faTrash} />
+                                    </div>
+                                    </CardImgOverlay>
+                                </Card>
+                            </StyledCard>
+                        </Col>
 
+                    ))
+                }
+            </Row>
+        </>
     );
 }
 
 export default TableBody;
+
+const StyledCard = styled.div`
+    .card{
+        height: 20rem;
+        .card-img{
+            height: 100%;
+            object-fit: cover;
+        }
+        .card-img-overlay{
+            background: rgba(0,0,0,0.5);
+        }
+        .buttons{
+            display: flex;
+
+        }
+    }
+`;

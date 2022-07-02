@@ -5,7 +5,7 @@ function NavBar() {
   return (
     <header className="main-head">
       <nav>
-        <h1 id="logo">Oliver Dahal</h1>
+        <Link to="/"><h1 id="logo">Galleriaa</h1></Link>        
         <ul className="nav-links">
             <Link to="/login"><li><a >Login</a></li></Link>
             <Link to="/signin"><li><a >SignIn</a></li></Link>

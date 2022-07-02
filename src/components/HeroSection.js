@@ -1,19 +1,25 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
+import bg from '../img/Gokarna/undraw_moments_0y20.svg'
 
 function HeroSection() {
     return (
         <section className="hero">
             <div className="hero-introduction flex">
-            <h2>
-                Oliver Dahal <br />
-                Photography
-            </h2>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque
-                minima assumenda expedita similique quaerat maiores ab, itaque hic
-                explicabo eaque!
-            </p>
-            <a href="#gallery">Gallery</a>
+            <img
+                className="bg-hero"
+                src={bg}
+                alt=""
+            />
+                <h2>    
+                    A Photography Gallery <br />
+                    
+                </h2>
+                <p>
+                    Create Your Own Gallery by adding your best pictures you have taken <br />
+                    Just Login and Continue
+                </p>
+                <Link to="/login">LOGIN TO CREATE</Link>
             </div>
             <div className="hero-images">
             <img

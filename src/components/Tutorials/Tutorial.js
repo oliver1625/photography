@@ -13,16 +13,19 @@ export default function Tutorial() {
   const initialTutorialState = {
     id: null,
     title: "",
+    address: "",
     description: "",
-    published: false
+    phone: "",
+    // image: ""
   };
 
   const [tutorials, setTutorials] = useState([]);
+  const [image, setImage] = useState();
   const [tutorial, setTutorial] = useState(initialTutorialState)
-  const [currentTutorial, setCurrentTutorial] = useState(initialTutorialState);
-  const [message, setMessage] = useState("");
-  const [submitted, setSubmitted] = useState(false)
+  const [picture, setPicture] = useState({});
+
   const [modal, setModal] = useState(false);
+  const [update, setUpdate] = useState(true);
   const toggle = () => setModal(!modal);
 
   const retrieveTutorials = () => {
@@ -38,28 +41,39 @@ export default function Tutorial() {
 
   useEffect(() => {
     retrieveTutorials()
-  }, []);
+  }, [update]);
 
-  const handleInputChange = event => {
-      const { name, value } = event.target;
+  const handleInputChange = e => {
+      const { name, value } = e.target;
       setTutorial({ ...tutorial, [name]: value });
   }
 
   const saveTutorial = () => {
-      var data = {
-          title: tutorial.title,
-          description: tutorial.description
-      };
+  
+      // var data = {
+      //     id: tutorial.id,
+      //     title: tutorial.title,
+      //     description: tutorial.description,
+      //     address: tutorial.address,
+      //     phone: tutorial.phone,
+      //     image: tutorial.file.path
+      // };
 
-      TutorialDataService.create(data)
+      let formData = new FormData();
+      formData.append('image', image, image.name);
+      formData.append('title', tutorial.title);
+      
+      TutorialDataService.create(formData)
           .then(response => {
+            setUpdate(!update)
               setTutorial({
-              id: response.data.id,
-              title: response.data.title,
-              description: response.data.description,
-              published: response.data.published
+                id: response.data.id,
+                title: response.data.title,
+                description: response.data.description,
+                address: response.data.address,
+                phone: response.data.phone,
+                // image: response.file.path,
               });
-              setSubmitted(true);
               console.log(response.data);
           })
           .catch(e => {
@@ -69,18 +83,17 @@ export default function Tutorial() {
 
   const newTutorial = () => {
       setTutorial(initialTutorialState);
-      setSubmitted(false);
   };
 
   const getTutorial = id => {
     TutorialDataService.get(id)
       .then(response => {
-
-        setCurrentTutorial({ 
+        setTutorial({ 
           id: response.data.id,
           title: response.data.title,
           description: response.data.description,
-          published: false
+          address: response.data.address,
+          phone: response.data.phone,
         });
         console.log(response.data);
       })
@@ -90,10 +103,12 @@ export default function Tutorial() {
   };
   
   const updateTutorial = () => {
-    TutorialDataService.update(currentTutorial.id, currentTutorial)
+    
+    TutorialDataService.update(tutorial.id, tutorial)
       .then(response => {
+        setUpdate(!update)
         console.log(response.data);
-        console.log("currentTutorial",currentTutorial);
+        console.log("tutorial",tutorial);
         setTutorial("The tutorial was updated successfully!");
       })
       .catch(e => {
@@ -101,13 +116,11 @@ export default function Tutorial() {
       });
   };
 
-  const deleteTutorial = () => {
-    getTutorial()
-    console.log("currenttutorialID",currentTutorial.id);
-    TutorialDataService.remove(currentTutorial.id)
+  const deleteTutorial = (id) => {
+    TutorialDataService.remove(id)
       .then(response => {
+        setUpdate(!update)
         console.log(response.data);
-        // navigate("/tutorials");
       })
       .catch(e => {
         console.log(e);
@@ -124,25 +137,21 @@ export default function Tutorial() {
               retrieveTutorials={retrieveTutorials}
               toggle={toggle}
             />
-            <div className="table-responsive">
-                <div className="table-wrapper">
-                    <TableBody                      
-                      tutorials={tutorials}
-                      deleteTutorial={deleteTutorial}
-                      updateTutorial={updateTutorial}
-                      message={message}
-                      currentTutorial={currentTutorial}
-                      toggle={toggle}
-                      getTutorial={getTutorial}
-                      />
-                </div>
+            <div className="">
+                  <TableBody                      
+                    tutorials={tutorials}
+                    deleteTutorial={deleteTutorial}
+                    updateTutorial={updateTutorial}
+                    toggle={toggle}
+                    getTutorial={getTutorial}
+                    />
             </div>
         </div>
         <Modal isOpen={modal} toggle={toggle}>
           <ModalHeader
               toggle={toggle}>Add A New User</ModalHeader>
           <ModalBody>
-            <Form>
+            <Form onSubmit={saveTutorial} enctype="multipart/form-data">
               <Row>
                   <Col md={6}>
                     <FormGroup>
@@ -152,7 +161,7 @@ export default function Tutorial() {
                         name="title"
                         placeholder="title"
                         type="text"
-                        value={currentTutorial.title}
+                        value={tutorial.title}
                         onChange={handleInputChange}
                         />
                     </FormGroup>
@@ -165,7 +174,7 @@ export default function Tutorial() {
                           name="description"
                           placeholder="Description"
                           type="text"
-                          value={currentTutorial.description}
+                          value={tutorial.description}
                           onChange={handleInputChange}
                         />
                     </FormGroup>
@@ -179,7 +188,7 @@ export default function Tutorial() {
                   id="address"
                   name="address"
                   placeholder="Addresss"
-                  value={currentTutorial.address}
+                  value={tutorial.address}
                   onChange={handleInputChange}
                   />
               </FormGroup>
@@ -191,15 +200,35 @@ export default function Tutorial() {
                   id="phone"
                   name="phone"
                   placeholder="98989898"
+                  value={tutorial.phone}
                   type='number'
                   onChange={handleInputChange}
                   />
+              </FormGroup>
+              <FormGroup>
+              <Label for="exampleFile">
+                File
+              </Label>
+              <Input
+                id="exampleFile"
+                name="image"
+                value={tutorial.image}
+                type="file"
+                onChange={(event) =>setImage(event.target.files[0])}
+              />
               </FormGroup>
             </Form>
           </ModalBody>
           <ModalFooter>
               <div className=""  onClick={toggle}>
-                <Button color="primary" onClick={saveTutorial}>Submit</Button>
+                {
+                  tutorial.id ? 
+                  <Button color="primary" onClick={updateTutorial}>Update</Button> 
+                  :
+                  <Button color="primary" onClick={saveTutorial}>Submit</Button>
+
+                }
+                
               </div>
           </ModalFooter>
         </Modal>

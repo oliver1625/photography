@@ -1,7 +1,8 @@
 import http from "../api/index";
 
 const getAll = () => {
-  return http.get("/tutorial");
+  const token = localStorage.getItem('user')
+  return http.get("/tutorial", {headers: {"Authorization" : `Bearer ${token}`}});
 };
 
 const get = id => {

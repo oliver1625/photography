@@ -13,7 +13,6 @@ function Header(props) {
     return (
         <header className="">
             <div className="header">
-                <h1>Users</h1>
                 <div className="header-right">
                     <div>
                         <div className="" onClick={newTutorial}>
