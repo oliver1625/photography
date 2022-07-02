@@ -1,31 +1,3 @@
-/* *{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-html{
-  font-size: 62.5%;
-}
-body{
-  font-family: 'Poppins', sans-serif;
-}
-h1{
-  font-size: 2.5rem;
-}
-h2{
-  font-size: 2rem;
-}
-h3{
-  font-size: 1.5rem;
-}
-a{
-  text-decoration: none;
-}
-p{
-  font-size: 1.3rem;
-}
-
- */
 
 /* Global Styles */
 
@@ -38,18 +10,22 @@ p{
 
 html {
   font-size: 62.5%;
-  --header1: calc(2rem + 1vw);
-  --header2: calc(3.5rem + 1vw);
-  --header3: calc(3rem + 1vw);
-  --header4: calc(2.4rem + 1vw);
-  --text: calc(1.5rem + 1vw);
+  --header1: calc(3rem + 1vw);
+  --header2: calc(2.5rem + 1vw);
+  --header3: calc(2rem + 1vw);
+  --header4: calc(1.3rem + 1vw);
+  --text: calc(1rem + 1vw);
   --big: calc(6rem + 1vw);
   --special-color: #906272;
   --background-color: #414141;
   --gray-text: #525252;
   scroll-behavior: smooth;
+  font-family: 'Poppins', sans-serif;
 }
-
+body{
+  font-family: 'Poppins', sans-serif;
+  animation: opening 1s ease-in-out forwards;
+}
 h1 {
   font-size: var(--header1);
 }
@@ -78,6 +54,7 @@ ul {
 a {
   text-decoration: none;
   color: black;
+  font-size: var(--text);
 }
 .flex {
   display: flex;
@@ -85,14 +62,13 @@ a {
   justify-content: center;
   align-items: center;
 }
-body {
-  font-family: "Ruhl", sans-serif;
-  animation: opening 1s ease-in-out forwards;
-}
 h1 {
   font-family: "Vibes", sans-serif;
 }
-
+.container-fluid{
+  width: 85% !important;
+  margin: auto;
+}
 /* Nav Section */
 .main-head {
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
@@ -106,7 +82,7 @@ nav {
   display: flex;
   align-items: center;
   min-height: 10vh;
-  padding: 2rem 0rem;
+  padding: 1rem 0rem;
 }
 #logo {
   flex: 1 1 20rem;
@@ -128,6 +104,7 @@ nav {
 .hero-introduction {
   flex: 2 1 59rem;
   text-align: center;
+  position: relative;
 }
 .hero-introduction p {
   padding: 5rem 10rem;
@@ -153,7 +130,15 @@ nav {
   height: 100%;
   object-fit: cover;
 }
-
+.bg-hero{
+  position: absolute;
+    top: 8rem;
+    left: -15rem;
+    width: 100%;
+    height: 50%;
+    z-index: -9;
+    opacity: .3;
+}
 /*ANIMATIONS */
 
 @keyframes opening {
