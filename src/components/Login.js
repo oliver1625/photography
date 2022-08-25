@@ -1,15 +1,17 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import bg from '../img/Gokarna/undraw_moments_0y20.svg'
-
+import { Notyf } from 'notyf';
+import 'notyf/notyf.min.css';
 import { Container, Button, Form, Row, Col, Label, Input, FormGroup, FormInput } from 'reactstrap';
 import styled from "styled-components";
 
 function Login() {
   const navigate = useNavigate();
-
+  const notyf = new Notyf();
+  const errorMessages = useRef({})
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -25,7 +27,13 @@ function Login() {
             localStorage.setItem('user', response.data.token);
             navigate('/user-profile');
         }).catch(e =>{
-            console.log(e)
+            if (e.response) {
+              errorMessages.value = e.response  
+              console.log(e.response)
+            }
+            if (e.response?.data?.errors) {
+              notyf.error(e.response.data.errors)
+            }
           })
   }
   return (

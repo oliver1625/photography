@@ -1,7 +1,8 @@
 import Tutorial from './components/Tutorials/Tutorial';
 import './styles/App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../node_modules/font-awesome/css/font-awesome.min.css'; 
+// import '../node_modules/font-awesome/css/font-awesome.min.css'; 
+import 'font-awesome/css/font-awesome.min.css';
 
 // import { useQueryClient, QueryClient, QueryClientProvider, useQuery } from 'react-query'
 import Login from './components/Login';

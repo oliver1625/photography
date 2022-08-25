@@ -32,7 +32,7 @@ export default function Tutorial() {
     TutorialDataService.getAll()
       .then(response => {
         setTutorials(response.data);
-        console.log(response.data);
+        console.log("called  retriveTutorial function",response.data);
       })
       .catch(e => {
         console.log(e);
@@ -62,19 +62,21 @@ export default function Tutorial() {
       let formData = new FormData();
       formData.append('image', image, image.name);
       formData.append('title', tutorial.title);
+      formData.append('description', tutorial.description);
+      formData.append('address', tutorial.address);
+      formData.append('phone', tutorial.phone);
       
       TutorialDataService.create(formData)
           .then(response => {
             setUpdate(!update)
               setTutorial({
-                id: response.data.id,
-                title: response.data.title,
-                description: response.data.description,
-                address: response.data.address,
-                phone: response.data.phone,
+                // title: response.data.title,
+                // description: response.data.description,
+                // address: response.data.address,
+                // phone: response.data.phone,
                 // image: response.file.path,
               });
-              console.log(response.data);
+              console.log("called get saveTutorial function",response.data);
           })
           .catch(e => {
               console.log(e);
@@ -95,7 +97,7 @@ export default function Tutorial() {
           address: response.data.address,
           phone: response.data.phone,
         });
-        console.log(response.data);
+        console.log("called geTutorial function",response.data);
       })
       .catch(e => {
         console.log(e);
@@ -107,7 +109,7 @@ export default function Tutorial() {
     TutorialDataService.update(tutorial.id, tutorial)
       .then(response => {
         setUpdate(!update)
-        console.log(response.data);
+        console.log("called updateTutorial function",response.data);
         console.log("tutorial",tutorial);
         setTutorial("The tutorial was updated successfully!");
       })
@@ -120,7 +122,7 @@ export default function Tutorial() {
     TutorialDataService.remove(id)
       .then(response => {
         setUpdate(!update)
-        console.log(response.data);
+        console.log("called deleteTutorial function",response.data);
       })
       .catch(e => {
         console.log(e);
@@ -128,7 +130,7 @@ export default function Tutorial() {
   };
   return (
     <div>
-        <div className="table">
+        <div className="">
             <Header
               saveTutorial={saveTutorial}
               newTutorial={newTutorial}
