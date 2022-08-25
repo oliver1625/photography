@@ -11,17 +11,11 @@ function Header(props) {
     const [modal, setModal] = useState(false);
 
     return (
-        <header className="">
-            <div className="header">
-                <div className="header-right">
-                    <div>
-                        <div className="" onClick={newTutorial}>
-                            <Button color="danger"
-                                onClick={toggle}>Add New User</Button>
-                        </div>  
-                    </div>
-                </div>
-            </div>
+        <header className="d-flex justify-content-end align-items-center p-5">
+            <div className="" onClick={newTutorial}>
+                <Button color="danger"
+                    onClick={toggle}>Add New Image</Button>
+            </div>  
         </header>
     );
 }

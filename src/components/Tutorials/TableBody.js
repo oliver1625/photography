@@ -10,15 +10,17 @@ function TableBody(props) {
 
     return (
         <>
-            <Row>
-                
+            <Row>               
                 {tutorials &&
                     tutorials.map((tutorial, index) => (
                         <Col sm='3'>
                             <StyledCard>
                                 <Card inverse>
                                     <CardImg
+                                
                                     // src={require('../../img/Gokarna/20200615_171932.jpg')}
+
+                                    // src={ tutorial.image ? `http://localhost:8080/${tutorial.image}` : require('../../img/Gokarna/20200615_171932.jpg')}
                                     src={`http://localhost:8080/${tutorial.image}`}
                                     width="100%"
                                     />
@@ -41,7 +43,6 @@ function TableBody(props) {
                                 </Card>
                             </StyledCard>
                         </Col>
-
                     ))
                 }
             </Row>
@@ -52,6 +53,7 @@ function TableBody(props) {
 export default TableBody;
 
 const StyledCard = styled.div`
+    transition: all .5s ease-in-out;
     .card{
         height: 20rem;
         .card-img{

@@ -422,8 +422,8 @@ input:focus {
   padding: 1rem;
 }
 .header{
-  display: flex;
-  justify-content: space-between;
+  /* display: flex;
+  justify-content: space-between; */
   padding: 2rem 4rem;
 }
 .table-head{
@@ -517,8 +517,8 @@ input:focus {
   width:75%;
 }
 .header-right{
-  display: flex;
-  align-items: center;
+  /* display: flex;
+  align-items: center; */
 }
 .search-box{
   margin-right: 2rem;

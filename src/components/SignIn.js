@@ -1,14 +1,17 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import axios from 'axios'
 import styled from "styled-components";
 import { useNavigate } from 'react-router-dom';
 import bg from '../img/Gokarna/undraw_moments_0y20.svg'
-
+import { Notyf } from 'notyf';
+import 'notyf/notyf.min.css';
 import { Container, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Row, Col, Label, Input, FormGroup, FormInput } from 'reactstrap';
 
 function SignIn() {
   const navigate = useNavigate();
+  const notyf = new Notyf();
+  const errorMessages = useRef({})
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -21,9 +24,16 @@ function SignIn() {
     }
     axios.post('http://localhost:8080/api/auth/signup', data).then( response =>{
             console.log(response)
+            notyf.success('Registered in sucessfully');
             navigate('/login');
         }).catch(e =>{
-            console.log(e)
+            if (e.response) {
+              errorMessages.value = e.response
+              console.log(e.response)
+            }
+            if (e.response?.data?.errors?.msg) {
+              notyf.error(e.response.data.errors.msg)
+            }
           })
   }
   return (
